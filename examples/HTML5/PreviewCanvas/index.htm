@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+        <meta charset="UTF-8">
+        <title>AirPointr HTML5 Example</title>
+        <script src="./preview.js" type="text/javascript"></script>
+</head>
+
+<!-- 
+with initSocket('<ws_host>', '<ws_port>', 'airpointr') the gesture preview is started
+please specify the hostname or IP of your raspi (<ws_host>) and the websocket port (<ws_port>)
+to connect to your raspi. 8081 is default for <ws_port>.
+-->
+<body onload="initSocket('<ws_host>', '8081', 'airpointr')" 
+      style="background-color: #ffffff; font-family:  Helvetica, Verdana, Arial, sans;">
+      
+<!-- header -->
+<div class="pagehead">
+	<h1>AirPointr Raspberry</h1>        
+</div>
+<!-- canvas example -->
+<div class="container">
+
+        <noscript>
+            <div class="content">
+                    <div id="noscript">Seems you have JavaScript disabled.<br />
+                        The gesture preview example depends on javascript, please enable javascript if you want to use this example.
+                    </div>
+            </div>
+        </noscript>
+
+        <div class="content"  style=" margin: 10px; ">
+                <h2>Live preview</h2>
+                <noscript>
+                <iframe src="preview.htm" height="520px" width="680px" style="border: none;">
+                        <h3>Sorry.</h3>
+                        <p style="border-left: 4px solid red; padding-left: 4px;">
+                        You seem to have neither JavaScript enabled nor iframe support.<br/>
+                        You will need to enable at least one of it to get a live preview.
+                        </p>
+                </iframe>
+                </noscript>
+                <div class="preview">
+                <!-- Here we create the canvas that is used for the gesture preview, it is referenced in the javascript file by its ID  -->
+                <canvas id="gesture_preview" 
+			width="640" 
+			height="480" 
+			style="width: 640px; 
+			       height: 480px; 
+			       z-index: 1; 
+			       position: absolute; 
+			       border: 2px solid #aeaeae;
+			       background-color: #ffffff;" />
+                </div>
+                <div style="margin-top: 510px;"> Note: For a working preview you have to specify the hostname of your Raspberry Pi in this HTML-file </div>
+
+                
+
+</div> <!-- page end-->
+
+
+
+</div>
+</body>
+</html>
