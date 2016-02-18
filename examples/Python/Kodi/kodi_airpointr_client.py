@@ -8,6 +8,7 @@ previous track) via gesture input from the connected AirPointr Service
 @package kodi_airpointr_client
 '''
 
+import sys
 import time
 import socket
 import threading
@@ -54,10 +55,9 @@ def do_every(interval, worker_func, iterations = 0):
     """
     if iterations != 1:
         threading.Timer(
-            interval,
-            do_every, [interval, worker_func, 0 if iterations == 0 else iterations-1]
-      ).start()
-    
+                        interval,
+                        do_every, [interval, worker_func, 0 if iterations == 0 else iterations-1]
+                        ).start()
     worker_func()
         
                     
@@ -132,7 +132,7 @@ def handle_discovery_message(addr, json_data):
 def handle_pointer_message(addr, json_data):
     """
     checks if the received pointer message should be handled as control input
-    and starts the evalution of the pointer data
+    and starts the evaluation of the pointer data
     """
     reception_time = time.clock()
     ip = addr[0]
@@ -306,10 +306,15 @@ def main():
     kodi_json_rpc_url = ("http://" + KODI_HOST +
                          ":" + str(KODI_PORT) + "/jsonrpc")
     
-    
     http_client = pyjsonrpc.HttpClient(kodi_json_rpc_url)
     
-    response = http_client.call("Player.GetActivePlayers")
+    try:
+        response = http_client.call("Player.GetActivePlayers")
+    except Exception as e:
+        print e
+        print "Kodi is not responding."
+        print "Please start Kodi before you run the client script!"
+        sys.exit(0)    
     
     if len(response) < 1:
         print "Kodi Status: No Player active, playback control is not active!"

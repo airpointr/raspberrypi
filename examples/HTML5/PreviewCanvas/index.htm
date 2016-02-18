@@ -10,7 +10,7 @@ with initSocket('<ws_host>', '<ws_port>', 'airpointr') the gesture preview is st
 please specify the hostname or IP of your raspi (<ws_host>) and the websocket port (<ws_port>)
 to connect to your raspi. 8081 is default for <ws_port>.
 -->
-<body onload="initSocket('<ws_host>', '8081', 'airpointr')" 
+<body onload="initSocket('beerchen1', '8081', 'airpointr')" 
       style="background-color: #ffffff; font-family:  Helvetica, Verdana, Arial, sans;">
       
 
@@ -32,7 +32,8 @@ to connect to your raspi. 8081 is default for <ws_port>.
 			   height: 480px; 
 			   border: 2px solid #aeaeae;
 			   background-color: #ffffff;"
-	/>
+	>
+	</canvas>
 </div>
 <p>Note: For a working preview you have to specify the hostname of your Raspberry Pi in this HTML-file </p>
 
