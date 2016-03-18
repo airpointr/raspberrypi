@@ -257,7 +257,7 @@ def execute_playback_command(command):
         print "Kodi Status: No Player active, playback control is not active!"
         return
         
-    print "MPD Status: Playback switched to: "+command   
+    print "Kodi Status: Playback switched to: "+command   
         
 
 def main():
@@ -278,7 +278,7 @@ def main():
                          socket.SOCK_DGRAM) # UDP
     
     
-    sock.bind((LOCAL_INTERFACE_IP, AIRPOINTR_DISCOVERY_PORT))
+    sock.bind(('', 0))
     
     if AIRPOINTR_HOST_IP == None:
         AIRPOINTR_HOST_IP = socket.gethostbyname_ex(AIRPOINTR_HOSTNAME)[2][0]

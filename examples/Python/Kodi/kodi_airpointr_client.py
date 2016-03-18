@@ -16,17 +16,17 @@ import json
 
 import pyjsonrpc
 
-# Interface IP for the communiation with the AirPointr Service
-# set to "0.0.0.0" on UNIX and to "<ip_of_ethernet_interface>" on Windows
-LOCAL_INTERFACE_IP = "localhost"
-
-# Host name where kodi is running, default is localhost if on same machine as Kodi
+# Hostname or IP of device where kodi is running
 # Make sure "Allow control of Kodi via HTTP" is set to ON in Settings -> 
 # Services -> Webserver
-KODI_HOST = "localhost"
+KODI_HOST = "<hostname or IP of kodi>"
  
-#Configured in Settings -> Services -> Webserver -> Port
+#Configured in Kodi Settings -> Services -> Webserver -> Port
 KODI_PORT = 8080
+
+# Interface IP for the communiation with the AirPointr Service
+# set to "0.0.0.0" on UNIX and to "<ip_of_ethernet_interface>" on Windows
+LOCAL_INTERFACE_IP = "0.0.0.0"
 
 # IP Address of the machine that should provide the AirPointr service
 # set to <"127.0.0.1"> if AirPointr runs on same machine
@@ -284,7 +284,7 @@ def main():
                          socket.SOCK_DGRAM) # UDP
     
     
-    sock.bind((LOCAL_INTERFACE_IP, AIRPOINTR_DISCOVERY_PORT))
+    sock.bind(('', 0))
     
     if AIRPOINTR_HOST_IP == None:
         AIRPOINTR_HOST_IP = socket.gethostbyname_ex(AIRPOINTR_HOSTNAME)[2][0]
@@ -308,13 +308,20 @@ def main():
     
     http_client = pyjsonrpc.HttpClient(kodi_json_rpc_url)
     
-    try:
-        response = http_client.call("Player.GetActivePlayers")
-    except Exception as e:
-        print e
-        print "Kodi is not responding."
-        print "Please start Kodi before you run the client script!"
-        sys.exit(0)    
+    kodi_responding = False
+    while not kodi_responding:
+        try:
+            kodi_responding = True
+            response = http_client.call("Player.GetActivePlayers")
+        except Exception as e:
+            kodi_responding = False
+            print e
+            print "Kodi is not responding."
+            print "Please check:"
+            print "  Is Kodi running?"
+            print "  Is the Kodi webserver enabled?"
+            print "  Is KODI_HOST and KODI_PORT correct?"
+            time.sleep(10)
     
     if len(response) < 1:
         print "Kodi Status: No Player active, playback control is not active!"

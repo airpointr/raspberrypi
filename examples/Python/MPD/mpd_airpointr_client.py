@@ -200,6 +200,8 @@ def handle_pointer_input(json_data):
         elif json_data["events"] == [u'lwipe']:
             print "\nevent occured: left swipe"
             change_playback_mode("backward")
+                
+    
 
 def connect_to_mpd():
     """
@@ -237,7 +239,7 @@ def set_volume_change(change):
     mpd_volume = float(mpd_status["volume"])
     new_volume = min(100,max(0,mpd_volume+change))
     mpd_client.setvol(int(new_volume))
-    print "Kodi Status: Volume changed to: " +str(new_volume) + "%"
+    print "MPD Status: Volume changed to: " +str(new_volume) + "%"
 
         
 def change_playback_mode(direction):
@@ -291,7 +293,7 @@ def main():
                          socket.SOCK_DGRAM) # UDP
     
     
-    sock.bind((LOCAL_INTERFACE_IP, AIRPOINTR_DISCOVERY_PORT))
+    sock.bind(('', 0))
     
     if AIRPOINTR_HOST_IP == None:
         AIRPOINTR_HOST_IP = socket.gethostbyname_ex(AIRPOINTR_HOSTNAME)[2][0]
