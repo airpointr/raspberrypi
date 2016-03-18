@@ -16,7 +16,7 @@ import json
 
 
 # IP Address of the machine that should provide the AirPointr service
-AIRPOINTR_HOST_IP = "raspberrypi3"
+AIRPOINTR_HOST_IP = "127.0.0.1"
 AIRPOINTR_GESTURE_PORT = 8981
 
 
