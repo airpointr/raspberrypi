@@ -39,7 +39,7 @@ class MyGestureHandler:
         
 
 if __name__ == "__main__":
-    g = MyGestureHandler();
-    g.discover();
+    g = MyGestureHandler()
+    g.discover()
     #g.connect(host = '192.168.57.1', port = 8981)
     airpointr.loop()
